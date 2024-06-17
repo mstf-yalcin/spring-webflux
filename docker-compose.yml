@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  webflux:
+    build:
+        context: .
+  postgres:
+    image: postgres
+
+volumes:
+  postgres-volume:
