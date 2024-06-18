@@ -19,6 +19,7 @@ public class CustomerRouter {
                         RouterFunctions.route()
                                 .POST("", customerHandler::handleCreate)
                                 .GET("", customerHandler::handleGetAll)
+                                .GET("/stream", customerHandler::handleStreamGetAll)
                                 .GET("/{id}/addresses", customerHandler::handleGetAllWithAddresses)
                                 .GET("/{id}", customerHandler::handleGetById)
                                 .PUT("/{id}", customerHandler::handleUpdate)

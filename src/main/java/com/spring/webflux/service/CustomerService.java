@@ -38,7 +38,7 @@ public class CustomerService {
     public Mono<CustomerDto> getById(UUID id) {
         return customerRepository.findById(id)
                 .map(CustomerDtoConverter::toDto)
-                .switchIfEmpty(Mono.error(new RuntimeException("Customer not found:" + id)));
+                .switchIfEmpty(Mono.error(new NotFoundException("Customer not found:" + id)));
     }
 
 //    public Mono<CustomerWithAddressDto> getCustomerByIdWithAddresses(UUID id) {
@@ -103,7 +103,7 @@ public class CustomerService {
                     return customerRepository.save(customer);
                 })
                 .map(CustomerDtoConverter::toDto)
-                .switchIfEmpty(Mono.error(new RuntimeException("Customer not found:" + id)));
+                .switchIfEmpty(Mono.error(new NotFoundException("Customer not found:" + id)));
     }
 
     public Mono<Void> delete(UUID id) {

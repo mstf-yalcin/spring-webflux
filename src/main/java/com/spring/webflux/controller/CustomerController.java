@@ -5,9 +5,8 @@ import com.spring.webflux.dto.request.customer.UpdateCustomerDto;
 import com.spring.webflux.dto.response.customer.CustomerDto;
 import com.spring.webflux.dto.response.customer.CustomerWithAddressDto;
 import com.spring.webflux.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
-import org.springframework.r2dbc.core.DatabaseClient;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -22,8 +21,7 @@ public class CustomerController {
     private final WebClient webClient;
     private final CustomerService customerService;
 
-    public CustomerController(DatabaseClient databaseClient,
-                              CustomerService customerService) {
+    public CustomerController(CustomerService customerService) {
         this.webClient = WebClient.create();
         this.customerService = customerService;
     }
@@ -50,12 +48,12 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Mono<CustomerDto> create(@RequestBody @Validated CreateCustomerDto customerDto) {
+    public Mono<CustomerDto> create(@RequestBody @Valid CreateCustomerDto customerDto) {
         return customerService.create(customerDto);
     }
 
     @PutMapping("{id}")
-    public Mono<CustomerDto> update(@RequestBody UpdateCustomerDto updateCustomerDto, @PathVariable UUID id) {
+    public Mono<CustomerDto> update(@RequestBody @Valid UpdateCustomerDto updateCustomerDto, @PathVariable UUID id) {
         return customerService.update(updateCustomerDto, id);
     }
 

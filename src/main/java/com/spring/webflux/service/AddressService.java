@@ -5,6 +5,7 @@ import com.spring.webflux.dto.request.address.CreateAddressDto;
 import com.spring.webflux.dto.request.address.UpdateAddressDto;
 import com.spring.webflux.dto.response.adress.AddressDto;
 import com.spring.webflux.entity.Address;
+import com.spring.webflux.exception.NotFoundException;
 import com.spring.webflux.repository.AddressRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -28,7 +29,7 @@ public class AddressService {
     public Mono<AddressDto> getById(UUID id) {
         return addressRepository.findById(id)
                 .map(AddressDtoConverter::toDto)
-                .switchIfEmpty(Mono.error(new RuntimeException("Address not found:" + id)));
+                .switchIfEmpty(Mono.error(new NotFoundException("Address not found:" + id)));
     }
 
     public Mono<AddressDto> create(CreateAddressDto createAddressDto) {
@@ -47,7 +48,7 @@ public class AddressService {
                     address.setCustomerId(updateAddressDto.customerId());
                     return addressRepository.save(address);
                 }).map(AddressDtoConverter::toDto)
-                .switchIfEmpty(Mono.error(new RuntimeException("Address not found:" + id)));
+                .switchIfEmpty(Mono.error(new NotFoundException("Address not found:" + id)));
     }
 
     public Mono<Void> delete(UUID id) {

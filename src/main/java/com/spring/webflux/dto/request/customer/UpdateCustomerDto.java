@@ -1,4 +1,6 @@
 package com.spring.webflux.dto.request.customer;
 
-public record UpdateCustomerDto(String name, String email) {
+import jakarta.validation.constraints.NotBlank;
+
+public record UpdateCustomerDto(@NotBlank String name,@NotBlank String email) {
 }
